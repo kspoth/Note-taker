@@ -19,7 +19,6 @@ html, body {
   color: #000000;
   outline: none;
   border: none;
-  display: flex;
   width: 100%;
 }
 
