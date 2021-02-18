@@ -5,28 +5,26 @@ var { v4: uuidv4 } = require("uuid");
 
 var app = express();
 
-//set up PORT
-var PORT = process.env.PORT || 8000;
-//set up express code
+var PORT = process.env.PORT || 3000;
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.json());
-//set up paths
+
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "./public/index.html"));
   });
 app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "./public/notes.html"));
   });
-//set up api routes
-//set up out get command
+
 app.get("/api/notes", function(req, res) {
   fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", (err, data) => {
       if (err) throw err;
       res.json(JSON.parse(data));
   });
 });
-//set up post command
+
 app.post("/api/notes", function(req, res) {
   let id = uuidv4();
   let note = {
@@ -51,7 +49,7 @@ app.post("/api/notes", function(req, res) {
       });
   });
 });
-//set up delete command
+
 app.delete("/api/notes/:id", function(req, res) {
   let setId = req.params.id;
 
@@ -68,11 +66,11 @@ app.delete("/api/notes/:id", function(req, res) {
   });
 });
 
-//set up default path
+
 app.get("*", function(req, res) {
   res.sendFile(path.join(__dirname, "./public/index.html"));
 });
-//set up server to listen
+
 app.listen(PORT, function() {
     console.log("App listening on PORT: " + PORT);
   });
